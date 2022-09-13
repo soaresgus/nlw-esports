@@ -1,0 +1,10 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+body {
+  background-color: #121214;
+  background-image: url('../../public/background-galaxy.png');
+  background-size: cover;
+  background-repeat: no-repeat;
+}
