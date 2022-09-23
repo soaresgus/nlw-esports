@@ -7,4 +7,6 @@ body {
   background-image: url('../../background-galaxy.png');
   background-size: cover;
   background-repeat: no-repeat;
+
+  overflow-y: overlay;
 }
