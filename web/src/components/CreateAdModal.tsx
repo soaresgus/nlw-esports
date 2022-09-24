@@ -25,21 +25,34 @@ export function CreateAdModal() {
     );
   }, []);
 
-  function handleCreateAd(event: FormEvent) {
+  async function handleCreateAd(event: FormEvent) {
     event.preventDefault();
 
     const formData = new FormData(event.target as HTMLFormElement);
     const data = Object.fromEntries(formData);
+    const fieldsIsValid = Object.values(data).every((value) => value != '');
+    const formIsValid = fieldsIsValid && selectedGameId && weekDays.length > 0;
 
-    axios.post(`https://localhost:3333/games/${selectedGameId}/ads`, {
-      name: data.name,
-      yearsPlaying: 2,
-      discord: 'Ninja#0603',
-      weekDays: ['0', '6'],
-      hourStart: '20:00',
-      hourEnd: '22:00',
-      useVoiceChannel: true,
-    });
+    try {
+      if (formIsValid) {
+        await axios.post(`http://localhost:3333/games/${selectedGameId}/ads`, {
+          name: data.name,
+          yearsPlaying: Number(data.yearsPlaying),
+          discord: data.discord,
+          weekDays: weekDays,
+          hourStart: data.hourStart,
+          hourEnd: data.hourEnd,
+          useVoiceChannel: useVoiceChannel,
+        });
+
+        alert('Enviado!');
+      } else {
+        alert('Preencha todos os campos.');
+      }
+    } catch (err) {
+      alert('Não foi possível enviar');
+      console.log(err);
+    }
   }
 
   return (
